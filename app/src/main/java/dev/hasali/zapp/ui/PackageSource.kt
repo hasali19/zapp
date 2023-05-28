@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -100,7 +101,7 @@ fun PackageSourceScreen(viewModel: PackageSourceViewModel) {
     }
 
     if (source == null) {
-        Box {
+        Box(modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     } else {
@@ -109,7 +110,11 @@ fun PackageSourceScreen(viewModel: PackageSourceViewModel) {
         }
 
         Scaffold(topBar = { TopAppBar(title = { Text(source!!.name) }) }) { padding ->
-            Box(modifier = Modifier.padding(padding)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+            ) {
                 val packages by viewModel.packages
                 if (packages == null) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
