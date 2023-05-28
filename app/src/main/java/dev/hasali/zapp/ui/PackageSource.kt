@@ -79,10 +79,13 @@ class PackageSourceViewModel(
                 }
             }
 
-            if (file != null) {
-                val connection = URL(file.url).openConnection()
-                appInstaller.install(connection.getInputStream())
+            if (file == null) {
+                _notifications.emit("No supported abi found in package")
+                return@withContext
             }
+
+            val connection = URL(file.url).openConnection()
+            appInstaller.install(connection.getInputStream())
         }
     }
 }
