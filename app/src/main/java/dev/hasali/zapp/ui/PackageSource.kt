@@ -141,8 +141,12 @@ fun PackageSourceScreen(viewModel: PackageSourceViewModel) {
                                 headlineText = { Text(pkg.name) },
                                 supportingText = { Text(pkg.packageName) },
                                 trailingContent = {
-                                    TextButton(enabled = info == null, onClick = ::onInstall) {
-                                        Text(if (info == null) "Install" else "Installed")
+                                    TextButton(onClick = ::onInstall) {
+                                        Text(
+                                            if (info == null) "Install"
+                                            else if (info.versionCode != pkg.versionCode) "Update"
+                                            else "Reinstall"
+                                        )
                                     }
                                 },
                             )
