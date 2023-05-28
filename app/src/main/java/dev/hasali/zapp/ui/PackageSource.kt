@@ -1,5 +1,6 @@
 package dev.hasali.zapp.ui
 
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -124,6 +125,12 @@ fun PackageSourceScreen(viewModel: PackageSourceViewModel) {
                 } else {
                     LazyColumn {
                         items(packages!!) { pkg ->
+                            val info = try {
+                                context.packageManager.getPackageInfo(pkg.packageName, 0)
+                            } catch (e: NameNotFoundException) {
+                                null
+                            }
+
                             fun onInstall() {
                                 coroutineScope.launch {
                                     viewModel.installPackage(pkg)
@@ -134,8 +141,8 @@ fun PackageSourceScreen(viewModel: PackageSourceViewModel) {
                                 headlineText = { Text(pkg.name) },
                                 supportingText = { Text(pkg.packageName) },
                                 trailingContent = {
-                                    TextButton(onClick = ::onInstall) {
-                                        Text("Install")
+                                    TextButton(enabled = info == null, onClick = ::onInstall) {
+                                        Text(if (info == null) "Install" else "Installed")
                                     }
                                 },
                             )
