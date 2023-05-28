@@ -70,20 +70,20 @@ class PackageSourceViewModel(
     }
 
     suspend fun installPackage(pkg: PackageSourceManifest.Package) {
+        var file: PackageSourceManifest.File? = null
+        for (abi in Build.SUPPORTED_ABIS) {
+            file = pkg.files.find { it.abi.toString() == abi }
+            if (file != null) {
+                break
+            }
+        }
+
+        if (file == null) {
+            _notifications.emit("No supported abi found in package")
+            return
+        }
+
         withContext(Dispatchers.IO) {
-            var file: PackageSourceManifest.File? = null
-            for (abi in Build.SUPPORTED_ABIS) {
-                file = pkg.files.find { it.abi.toString() == abi }
-                if (file != null) {
-                    break
-                }
-            }
-
-            if (file == null) {
-                _notifications.emit("No supported abi found in package")
-                return@withContext
-            }
-
             val connection = URL(file.url).openConnection()
             appInstaller.install(connection.getInputStream())
         }
