@@ -3,7 +3,7 @@
   "name": "Zapp",
   "packages": [
     {
-      "name": "Zenith",
+      "name": "Zapp",
       "packageName": "dev.hasali.zapp",
       "url": "https://github.com/hasali19/zapp",
       "version": "1.0.0",
@@ -15,7 +15,7 @@
           "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp-release.apk"
         },
         {
-          "name": "zenith-release.apk",
+          "name": "zapp-release.apk",
           "abi": "armeabi-v7a",
           "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp-release.apk"
         },
