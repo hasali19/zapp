@@ -49,7 +49,8 @@ jobs:
           mkdir release_artifacts
           
           echo "Preparing android apk"
-          cp artifacts/app-release/app-release.apk release_artifacts/zapp-release.apk
+          cp artifacts/app-release/app-release.apk release_artifacts/zapp.apk
+          jq "(.packages[] | select(.packageName == 'dev.hasali.zapp') | .versionCode) |= $GITHUB_RUN_NUMBER" zapp.apk.json > release_artifacts/zapp.apk.json
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
