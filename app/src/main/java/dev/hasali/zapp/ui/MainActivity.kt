@@ -3,6 +3,7 @@ package dev.hasali.zapp.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "home") {
                     composable("home") {
                         PackageSourcesScreen(
-                            viewModel = PackageSourcesViewModel(packageSourceRepo),
+                            viewModel = remember { PackageSourcesViewModel(packageSourceRepo) },
                             onAddPackageSource = { navController.navigate("add_package_source") },
                             onViewPackageSource = { navController.navigate("package_source/$it") },
                         )
@@ -42,16 +43,21 @@ class MainActivity : ComponentActivity() {
 
                     composable("add_package_source") {
                         AddPackageSourceScreen(
-                            viewModel = AddPackageSourceViewModel(db, jsonFormat),
+                            viewModel = remember { AddPackageSourceViewModel(db, jsonFormat) },
                         )
                     }
 
                     composable("package_source/{id}") { entry ->
                         val id = entry.arguments?.getString("id")?.toInt()!!
                         PackageSourceScreen(
-                            viewModel = PackageSourceViewModel(
-                                id, packageSourceRepo, jsonFormat, AppInstaller(applicationContext)
-                            )
+                            viewModel = remember {
+                                PackageSourceViewModel(
+                                    id,
+                                    packageSourceRepo,
+                                    jsonFormat,
+                                    AppInstaller(applicationContext)
+                                )
+                            }
                         )
                     }
                 }
