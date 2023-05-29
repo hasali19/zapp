@@ -28,7 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.hasali.zapp.AppInstaller
 import dev.hasali.zapp.PackageSourceManifest
-import dev.hasali.zapp.db.Database
+import dev.hasali.zapp.repo.PackageSourceRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -41,12 +41,12 @@ import java.net.URL
 
 class PackageSourceViewModel(
     private val id: Int,
-    private val db: Database,
+    private val packageSourceRepo: PackageSourceRepo,
     private val jsonFormat: Json,
     private val appInstaller: AppInstaller,
 ) {
     val source
-        get() = db.packageSourceDao().getById(id)
+        get() = packageSourceRepo.getPackageSource(id)
 
     private val _manifest = mutableStateOf<PackageSourceManifest?>(null)
 

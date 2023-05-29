@@ -19,11 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import dev.hasali.zapp.db.Database
+import dev.hasali.zapp.repo.PackageSourceRepo
 
-class PackageSourcesViewModel(private val db: Database) {
+class PackageSourcesViewModel(private val packageSourceRepo: PackageSourceRepo) {
     val sources
-        @Composable get() = db.packageSourceDao().getAll().observeAsState(emptyList())
+        get() = packageSourceRepo.getPackageSources()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +42,7 @@ fun PackageSourcesScreen(
         },
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
-            val sources by viewModel.sources
+            val sources by viewModel.sources.observeAsState(emptyList())
 
             LazyColumn {
                 items(sources) {

@@ -9,14 +9,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import dev.hasali.zapp.AppInstaller
 import dev.hasali.zapp.db.Database
+import dev.hasali.zapp.repo.PackageSourceRepo
 import dev.hasali.zapp.ui.theme.ZappTheme
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalSerializationApi::class)
 class MainActivity : ComponentActivity() {
-    private lateinit var db: Database
-
     private val jsonFormat = Json {
         explicitNulls = false
         ignoreUnknownKeys = true
@@ -25,7 +24,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        db = Room.databaseBuilder(applicationContext, Database::class.java, "zapp").build()
+        val db = Room.databaseBuilder(applicationContext, Database::class.java, "zapp").build()
+        val packageSourceRepo = PackageSourceRepo(db)
 
         setContent {
             val navController = rememberNavController()
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "home") {
                     composable("home") {
                         PackageSourcesScreen(
-                            viewModel = PackageSourcesViewModel(db),
+                            viewModel = PackageSourcesViewModel(packageSourceRepo),
                             onAddPackageSource = { navController.navigate("add_package_source") },
                             onViewPackageSource = { navController.navigate("package_source/$it") },
                         )
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         val id = entry.arguments?.getString("id")?.toInt()!!
                         PackageSourceScreen(
                             viewModel = PackageSourceViewModel(
-                                id, db, jsonFormat, AppInstaller(applicationContext)
+                                id, packageSourceRepo, jsonFormat, AppInstaller(applicationContext)
                             )
                         )
                     }
