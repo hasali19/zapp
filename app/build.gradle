@@ -34,8 +34,8 @@ android {
         applicationId "dev.hasali.zapp"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode project.hasProperty('versionCode') ? versionCode.toInteger() : 0
+        versionName project.hasProperty('versionName') ? versionName : "0.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

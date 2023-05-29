@@ -17,7 +17,7 @@ jobs:
 
       - run: |
           echo $ANDROID_KEYSTORE | base64 -d > app/$ANDROID_KEYSTORE_PATH
-          sh gradlew assembleRelease
+          sh gradlew assembleRelease -PversionCode=$GITHUB_RUN_NUMBER -PversionName=1.0.0
         env:
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
           ANDROID_KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
