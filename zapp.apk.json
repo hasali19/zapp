@@ -10,19 +10,19 @@
       "versionCode": 0,
       "files": [
         {
-          "name": "zapp-release.apk",
+          "name": "zapp.apk",
           "abi": "arm64-v8a",
-          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp-release.apk"
+          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp.apk"
         },
         {
-          "name": "zapp-release.apk",
+          "name": "zapp.apk",
           "abi": "armeabi-v7a",
-          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp-release.apk"
+          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp.apk"
         },
         {
-          "name": "zapp-release.apk",
+          "name": "zapp.apk",
           "abi": "x86_64",
-          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp-release.apk"
+          "url": "https://github.com/hasali19/zapp/releases/download/latest/zapp.apk"
         }
       ]
     }
